@@ -15,8 +15,10 @@ This was more of a fun project for me as hiding one's MAC doesn't make much sens
 3) Adjust spoofing options under 'Security' Tab in the Settings App
 4) Profit!
 
+
 ## Notes
  - Limited functionality for PSTV users as 'Security' tab doesn't exist.
-   
+
+
 ## Credits & Thanks
 Team Molecule, TheOfficialFlow, SKGleba, Princess-of-Sleeping
