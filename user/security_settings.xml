@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<system_settings version="1.0" plugin="security_settings_plugin">
+
+  <!-- セキュリティ設定 -->
+  <setting_list id="setting_list_security_settings" title="msg_pc_security">
+    
+    <!-- 画面ロック -->
+    <setting_list id="setting_list_screen_lock"
+                  title="msg_screen_lock_passcode"
+                  icon="tex_spanner"
+                  authentication="screen_lock">
+
+      <!-- ロック解除時にパスコードを確認する -->
+      <toggle_switch id="toggle_switch_unlock_control_screen_lock"
+                     title="msg_require_passcode_unlock"
+                     icon="tex_spanner"/>
+
+      <!-- パスコードを変更する -->
+      <button id="button_pw_change_screen_lock"
+              title="msg_change_passcode"
+              icon="tex_spanner"/>
+      
+    </setting_list>
+	
+	<setting_list id="setting_list_macspoof" title="MAC Address Spoof" icon="tex_spanner">
+		
+		<!-- main toggle -->
+		<toggle_switch id="id_macspoof_enabletoggle"
+					   title="Enable MAC Spoofing"
+					   icon="tex_spanner"
+					   key="/CONFIG/MACSPOOF/enable_mac_spoofing"/>
+
+		<!-- style select -->
+		<list id="id_macspoof_character" key="/CONFIG/MACSPOOF/styleformat" icon="tex_spanner" title="Style Format">
+			<list_item id="id_macspoof_zero" title="00:00:00:00:00:00" value="0"/>
+			<list_item id="id_macspoof_xxxx" title="XX:XX:XX:XX:XX:XX" value="1"/>
+			<list_item id="id_macspoof_ques" title="??:??:??:??:??:??" value="2"/>
+			<list_item id="id_macspoof_hash" title="##:##:##:##:##:##" value="3"/>
+			<list_item id="id_macspoof_mins" title="--:--:--:--:--:--" value="4"/>
+		</list>
+		
+		<spacer id="id_macspoof_spacer1" height="24"/>
+		
+		<!-- enable custom text -->
+		<toggle_switch id="id_macspoof_usecustomtext"
+					   title="Use Custom Text"
+					   description="Enable to show a custom text of your choice instead"
+					   icon="tex_spanner"
+					   key="/CONFIG/MACSPOOF/enable_customtext"/>
+					   
+		<!-- enter custom text -->
+		<text_field id="id_macspoof_customtext"
+					title="Enter Custom Text"
+					description="You can use up to 18 characters"
+					key="/CONFIG/MACSPOOF/custom_text"
+					keyboard_type="basic_latin"
+					max_length="18"/>
+					
+		
+	</setting_list>
+
+  </setting_list>
+
+</system_settings>
