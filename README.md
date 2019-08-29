@@ -10,7 +10,7 @@ This was more of a fun project for me as hiding one's MAC doesn't make much sens
 
 
 ## Installation
-1) Add *macspoof.suprx* to `ur0:tai/config.txt` under `NPXS10015` and `NPXS10016`
+1) Add *macspoofer.suprx* to `ur0:tai/config.txt` under `*NPXS10015` and `*NPXS10016`
 2) Reboot or reload tai config in HENkaku settings
 3) Adjust spoofing options under 'Security' Tab in the Settings App
 4) Profit!
