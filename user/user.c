@@ -44,16 +44,16 @@ static int load_config_user(void) {
   if (fd >= 0) {
     rd = sceIoRead(fd, &config, sizeof(config));
     sceIoClose(fd);
-	if (rd == sizeof(config))
-		return 0;
+    if (rd == sizeof(config))
+      return 0;
   }
   //default config
   sceClibMemset(&config, 0, sizeof(config));
-	config.enable_mac_spoofing = 1;
-	config.styleformat = 1;
-	config.enable_customtext = 0;
-	sceClibMemset(config.custom_text, 0, 18);
-	sceClibStrncpy(config.custom_text, "[HIDDEN]", 8);
+    config.enable_mac_spoofing = 1;
+    config.styleformat = 1;
+    config.enable_customtext = 0;
+    sceClibMemset(config.custom_text, 0, 18);
+    sceClibStrncpy(config.custom_text, "[HIDDEN]", 8);
   save_config_user();
   return 0;
 }
@@ -71,31 +71,31 @@ static int scePafMiscLoadXmlLayout_SceSettings_patched(int a1, void *xml_buf, in
 
 static tai_hook_ref_t g_sce_paf_private_snprintf_SceSettings_hook;
 static int sce_paf_private_snprintf_SceSettings_patched(char *s, size_t n, const char *format, ...) {
-	if (n == 18 && sceClibStrncmp(format, "%02X:%02X:%02X:%02X:%02X:%02X", 18) == 0) {
-		if (config.enable_mac_spoofing == 1) {
-			sceClibMemset(s, 0, n);
-			if (config.enable_customtext == 1) {
-				sceClibStrncpy(s, config.custom_text, 18);
-			} else {
-				switch(config.styleformat) {
-					case 0: sceClibStrncpy(s, "00:00:00:00:00:00", 18); break;
-					case 1: sceClibStrncpy(s, "XX:XX:XX:XX:XX:XX", 18); break;
-					case 2: sceClibStrncpy(s, "??:??:??:??:??:??", 18); break;
-					case 3: sceClibStrncpy(s, "##:##:##:##:##:##", 18); break;
-					case 4: sceClibStrncpy(s, "--:--:--:--:--:--", 18); break;
-					default: sceClibStrncpy(s, "error", 5); break;
-				}
-			}
-			return 0;
-		}
-	}
+  if (n == 18 && sceClibStrncmp(format, "%02X:%02X:%02X:%02X:%02X:%02X", 18) == 0) {
+    if (config.enable_mac_spoofing == 1) {
+      sceClibMemset(s, 0, n);
+      if (config.enable_customtext == 1) {
+        sceClibStrncpy(s, config.custom_text, 18);
+      } else {
+        switch(config.styleformat) {
+          case 0: sceClibStrncpy(s, "00:00:00:00:00:00", 18); break;
+          case 1: sceClibStrncpy(s, "XX:XX:XX:XX:XX:XX", 18); break;
+          case 2: sceClibStrncpy(s, "??:??:??:??:??:??", 18); break;
+          case 3: sceClibStrncpy(s, "##:##:##:##:##:##", 18); break;
+          case 4: sceClibStrncpy(s, "--:--:--:--:--:--", 18); break;
+          default: sceClibStrncpy(s, "error", 5); break;
+        }
+      }
+      return 0;
+    }
+  }
 
-	va_list list;
-	va_start(list, format);
-	int res = sceClibVsnprintf(s, n, format, list);
-	va_end(list);
+  va_list list;
+  va_start(list, format);
+  int res = sceClibVsnprintf(s, n, format, list);
+  va_end(list);
 
-	return res;
+  return res;
 }
 
 static tai_hook_ref_t g_sceRegMgrGetKeyInt_SceSystemSettingsCore_hook;
@@ -111,7 +111,7 @@ static int sceRegMgrGetKeyInt_SceSystemSettingsCore_patched(const char *category
         *value = config.enable_customtext;
       }
     }
-	save_config_user();
+    save_config_user();
     return 0;
   }
   return TAI_CONTINUE(int, g_sceRegMgrGetKeyInt_SceSystemSettingsCore_hook, category, name, value);
@@ -128,7 +128,7 @@ static int sceRegMgrSetKeyInt_SceSystemSettingsCore_patched(const char *category
       config.enable_customtext = value;
     }
     save_config_user();
-	//henkaku_reload_config();
+    //henkaku_reload_config();
     return 0;
   }
   return TAI_CONTINUE(int, g_sceRegMgrSetKeyInt_SceSystemSettingsCore_hook, category, name, value);
@@ -140,8 +140,8 @@ static int sceRegMgrGetKeyStr_SceSystemSettingsCore_patched(const char *category
     if (sceClibStrncmp(name, "custom_text", 11) == 0) {
       if (string != NULL) {
         load_config_user();
-		sceClibMemset(string, 0, 18);
-		sceClibStrncpy(string, config.custom_text, length);
+        sceClibMemset(string, 0, 18);
+        sceClibStrncpy(string, config.custom_text, length);
       }
     }
 	save_config_user();
@@ -155,11 +155,11 @@ static int sceRegMgrSetKeyStr_SceSystemSettingsCore_patched(const char *category
   if (sceClibStrncmp(category, "/CONFIG/MACSPOOF", 16) == 0) {
     if (sceClibStrncmp(name, "custom_text", 11) == 0) {
       if (string != NULL) {
-		sceClibMemset(config.custom_text, 0, 18);
+        sceClibMemset(config.custom_text, 0, 18);
         sceClibStrncpy(config.custom_text, string, length);
       }
     }
-	save_config_user();
+    save_config_user();
     return 0;
   }
   return TAI_CONTINUE(int, g_sceRegMgrSetKeyStr_SceSystemSettingsCore_hook, category, name, string, length);
@@ -256,7 +256,6 @@ static int sceKernelStopUnloadModule_SceSettings_patched(SceUID modid, SceSize a
 void _start() __attribute__ ((weak, alias ("module_start")));
 int module_start(SceSize argc, const void *args) {
   load_config_user();
-  
   g_hooks[0] = taiHookFunctionImport(&g_sceKernelLoadStartModule_SceSettings_hook, 
                                       "SceSettings", 
                                       0xCAE9ACE6, // SceLibKernel
