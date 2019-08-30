@@ -1,4 +1,4 @@
-# vita-macspoofer
+# macspoofer
 A plugin to spoof your MAC address in the System Information with advanced options
 
 This was more of a fun project for me as hiding one's MAC doesn't make much sense anymore but was quite popular in the PSP days. 
